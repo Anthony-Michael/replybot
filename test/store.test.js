@@ -102,3 +102,17 @@ test('location history can be forgotten without losing the hours', () => {
 test('coveredDays reports which days can still be re-inferred', () => {
   assert.deepEqual(coveredDays([at(0), at(DAY), at(DAY + HOUR)]), ['2026-08-25', '2026-08-26']);
 });
+
+test('a second copy of the app does not erase the first one\'s fixes', () => {
+  const shared = backend();
+  const phone = createStore(shared, { now: () => NOW });
+  const tab = createStore(shared, { now: () => NOW });
+
+  phone.addSample(at(HOUR));
+  // The other copy has been holding stale state all along; without a reload its
+  // next write would drop the fix the first one just recorded.
+  tab.reload();
+  tab.addSample(at(30 * 60_000));
+
+  assert.equal(createStore(shared, { now: () => NOW }).state.samples.length, 2);
+});

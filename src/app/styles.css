@@ -1,0 +1,180 @@
+/*
+ * Built to be read at arm's length, outdoors, in sun, possibly with gloves on.
+ * That drives most of what follows: large type, heavy weights, tap targets that
+ * are hard to miss, and colour that still carries meaning at low contrast
+ * ratios when the screen is washed out.
+ */
+
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #e9edf1;
+  --ink: #10161c;
+  --ink-soft: #4d5b69;
+  --line: #cfd8e0;
+
+  --brand: #1b4965;
+  --brand-ink: #ffffff;
+  --on-clock: #0b6b3a;
+  --on-clock-soft: #d7f0e2;
+  --ot: #8a4b00;
+  --ot-soft: #ffe9cc;
+  --warn: #8a2b2b;
+  --warn-soft: #fbdcdc;
+
+  --radius: 14px;
+  --tap: 52px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1116;
+    --surface: #161c23;
+    --surface-2: #202932;
+    --ink: #eef3f7;
+    --ink-soft: #a3b1bf;
+    --line: #2c3742;
+
+    --brand: #4f9dc9;
+    --brand-ink: #06131c;
+    --on-clock: #5fd39a;
+    --on-clock-soft: #123021;
+    --ot: #f0b268;
+    --ot-soft: #35240f;
+    --warn: #f28d8d;
+    --warn-soft: #3a1a1a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 17px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  padding-bottom: calc(72px + var(--safe-b));
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ---- Status bar ---------------------------------------------------------- */
+
+.statusbar {
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding: 18px 18px 20px;
+  padding-top: calc(18px + env(safe-area-inset-top, 0px));
+}
+.statusbar.on-clock { background: var(--on-clock); color: #fff; }
+
+.status-line { font-size: 15px; opacity: .9; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.status-main { font-size: 34px; font-weight: 800; margin: 4px 0 2px; letter-spacing: -.02em; }
+.status-sub { font-size: 16px; opacity: .92; }
+.status-note { margin-top: 10px; font-size: 14px; opacity: .85; }
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.panel { padding: 16px 14px 24px; max-width: 720px; margin: 0 auto; }
+.panel > h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin: 22px 4px 10px; }
+.panel > h2:first-child { margin-top: 4px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.card.flagged { border-left: 5px solid var(--ot); }
+
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.row + .row { margin-top: 10px; }
+.stack { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.big { font-size: 27px; font-weight: 800; letter-spacing: -.02em; }
+.range { font-size: 21px; font-weight: 700; white-space: nowrap; }
+.muted { color: var(--ink-soft); font-size: 15px; }
+.mono { font-variant-numeric: tabular-nums; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.tag {
+  display: inline-block; font-size: 13px; font-weight: 700;
+  padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+}
+.tag.ot { background: var(--ot-soft); color: var(--ot); }
+.tag.check { background: var(--warn-soft); color: var(--warn); }
+.tag.ok { background: var(--on-clock-soft); color: var(--on-clock); }
+.tag.plain { background: var(--surface-2); color: var(--ink-soft); }
+
+/* ---- Controls ------------------------------------------------------------ */
+
+button, select, input, textarea { font: inherit; color: inherit; }
+
+.btn {
+  min-height: var(--tap);
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--brand); color: var(--brand-ink); border-color: transparent; }
+.btn.danger { color: var(--warn); }
+.btn.wide { width: 100%; }
+.btn.small { min-height: 42px; padding: 0 14px; font-size: 15px; }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.btn-row > .btn { flex: 1 1 auto; }
+
+.field { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: var(--tap); }
+.field + .field { border-top: 1px solid var(--line); }
+.field label { font-weight: 600; }
+.field .hint { display: block; font-weight: 400; font-size: 14px; color: var(--ink-soft); }
+.field input, .field select {
+  min-height: 44px; padding: 6px 10px; text-align: right;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--bg);
+  max-width: 46%;
+}
+.field input[type="checkbox"] { width: 28px; height: 28px; min-height: 0; }
+
+/* ---- Tabs ---------------------------------------------------------------- */
+
+.tabs {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: var(--safe-b);
+}
+.tab {
+  border: 0; background: none; padding: 14px 4px;
+  font-size: 14px; font-weight: 700; color: var(--ink-soft); cursor: pointer;
+  border-top: 3px solid transparent;
+}
+.tab[aria-selected="true"] { color: var(--brand); border-top-color: var(--brand); }
+.tab .badge {
+  display: inline-block; min-width: 20px; margin-left: 5px; padding: 0 5px;
+  background: var(--warn); color: #fff; border-radius: 999px; font-size: 12px;
+}
+
+/* ---- Dialog -------------------------------------------------------------- */
+
+.editor {
+  border: 0; border-radius: 16px; padding: 20px;
+  width: min(440px, calc(100vw - 28px));
+  background: var(--surface); color: var(--ink);
+}
+.editor::backdrop { background: rgba(0, 0, 0, .55); }
+.editor h3 { margin: 0 0 4px; font-size: 21px; }
+
+.empty { text-align: center; color: var(--ink-soft); padding: 34px 16px; }
+.empty strong { display: block; font-size: 19px; color: var(--ink); margin-bottom: 6px; }
+
+.totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+.totals div { background: var(--surface-2); border-radius: 12px; padding: 12px 6px; }
+.totals .n { font-size: 25px; font-weight: 800; }
+.totals .l { font-size: 13px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
+
+.weeknav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }

@@ -94,6 +94,19 @@ export function createStore(backend, { now = () => Date.now() } = {}) {
       return state.samples.filter((s) => s.ts > from);
     },
 
+    /**
+     * Re-read from the backing store, discarding what is held in memory.
+     *
+     * Two copies of the app open at once — a browser tab and the installed
+     * home-screen one — each hold their own state and each write the whole blob
+     * on save, so the second writer would otherwise erase the first's fixes.
+     * The caller listens for the storage event and calls this.
+     */
+    reload() {
+      state = read();
+      return state;
+    },
+
     patch(changes) {
       state = { ...state, ...changes };
       return flush();

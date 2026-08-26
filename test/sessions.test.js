@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { learnPlaces } from '../src/core/places.js';
 import { buildVisits, buildShifts } from '../src/core/sessions.js';
-import { dayKey, clock, HOUR, MINUTE } from '../src/core/time.js';
+import { dayKey, clock, HOUR } from '../src/core/time.js';
 import { SITE, HOME, DINER, trace, fix, hours } from './helpers.js';
 
 /** Places learned from an ordinary week, so the day under test has context. */

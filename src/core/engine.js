@@ -94,9 +94,13 @@ export function weekView(state, ts = Date.now()) {
   };
 }
 
-/** Days that want a look before the timesheet goes in. */
+/**
+ * Days that genuinely want a look before the timesheet goes in: one the app is
+ * not confident about, or one where it disagrees with what you entered. A day
+ * that is merely a few minutes fuzzy at the edges is not worth a badge.
+ */
 export function needsReview(state) {
   return state.records.filter(
-    (r) => r.status === 'auto' && r.shifts.some((s) => s.confidence !== 'high'),
-  ).length + state.records.filter((r) => r.suggestion).length;
+    (r) => r.suggestion || (r.status === 'auto' && r.shifts.some((s) => s.confidence === 'low')),
+  ).length;
 }

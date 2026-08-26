@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b4965">
+<title>ShiftSense — automatic work hours</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="src/app/styles.css">
+</head>
+<body>
+<noscript>ShiftSense needs JavaScript to read your phone's location.</noscript>
+
+<header class="statusbar" id="statusbar" aria-live="polite"></header>
+
+<main id="panel" class="panel"></main>
+
+<nav class="tabs" id="tabs" role="tablist">
+  <button role="tab" data-tab="today" class="tab" aria-selected="true">Today</button>
+  <button role="tab" data-tab="week" class="tab" aria-selected="false">Week</button>
+  <button role="tab" data-tab="sites" class="tab" aria-selected="false">Sites</button>
+  <button role="tab" data-tab="settings" class="tab" aria-selected="false">Settings</button>
+</nav>
+
+<dialog id="editor" class="editor"></dialog>
+
+<script type="module" src="src/app/main.js"></script>
+</body>
+</html>
