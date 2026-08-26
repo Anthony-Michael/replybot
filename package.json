@@ -1,0 +1,14 @@
+{
+  "name": "shiftsense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Automatic work-hours tracking from location and time. Learns your job sites, infers your shifts, logs your overtime.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'test/*.test.js'",
+    "serve": "node scripts/serve.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
